@@ -10,10 +10,6 @@ Features include:
   - `strftime` style formatting
 
 
-[![Build Status](https://travis-ci.org/daurnimator/luatz.png)](https://travis-ci.org/daurnimator/luatz) [![Coverage Status](https://coveralls.io/repos/github/daurnimator/luatz/badge.svg?branch=master)](https://coveralls.io/github/daurnimator/luatz?branch=master)
-
-Supported under Lua 5.1, 5.2, 5.3 and LuaJIT.
-
 
 ## Documentation
 
@@ -21,9 +17,12 @@ Documentation can be found in the `doc` sub-directory.
 
 An online version can be found at https://daurnimator.github.io/luatz/
 
+# Defold
+
+The project forked from https://github.com/daurnimator/luatz have been adapted to be used as a Defold library.
 
 ## Installation
 
-### via [luarocks](https://luarocks.org/modules/daurnimator/luatz)
+You can use luatz in your own project by adding this project as a [Defold library dependency](http://www.defold.com/manuals/libraries/). Open your game.project file and in the dependencies field under project add:
 
-    luarocks install luatz
+	https://github.com/Jerakin/luatz/archive/master.zip
