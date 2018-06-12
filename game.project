@@ -5,8 +5,8 @@ main_collection = /main/main.collectionc
 shared_state = 1
 
 [project]
-title = deftz
+title = luatz
 
 [library]
-include_dirs = /luatz
+include_dirs = luatz
 
