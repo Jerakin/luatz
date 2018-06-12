@@ -1,5 +1,4 @@
-local tz_info_mt = require "luatz.tzinfo".tz_info_mt
-local tt_info_mt = require "luatz.tzinfo".tt_info_mt
+local tzinfo = require "luatz.tzinfo"
 
 local read_int32be, read_int64be
 
@@ -201,7 +200,7 @@ local function read_tz(fd)
 			v.abbr = abbreviations:sub(v.abbrind+1, v.abbrind+3)
 			v.isstd = isstd[i] or false
 			v.isgmt = isgmt[i] or false
-			setmetatable(v, tt_info_mt)
+			setmetatable(v, tzinfo.tt_info_mt)
 		end
 
 		--[[
@@ -232,7 +231,7 @@ local function read_tz(fd)
 				info = ttinfos[transition_time_ind[i]+1];
 			}
 		end
-		return setmetatable(res, tz_info_mt)
+		return setmetatable(res, tzinfo.tz_info_mt)
 	else
 		error("Unsupported version")
 	end

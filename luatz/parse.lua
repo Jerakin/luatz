@@ -1,4 +1,4 @@
-local new_timetable = require "luatz.timetable".new
+local timetable = require "luatz.timetable"
 
 --- Parse an RFC 3339 datetime at the given position
 -- Returns a time table and the `tz_offset`
@@ -17,7 +17,7 @@ local function rfc_3339(str, init)
 	min   = tonumber(min, 10)
 	sec   = tonumber(sec, 10)
 
-	local tt = new_timetable(year, month, day, hour, min, sec)
+	local tt = timetable.new(year, month, day, hour, min, sec)
 
 	local tz_offset
 	if str:match("^[Zz]", patt_end) then

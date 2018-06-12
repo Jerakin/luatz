@@ -1,10 +1,10 @@
-local gettime = require "luatz.gettime".gettime
-local timetable_mt = require "luatz.timetable".timetable_mt
+local tzgettime = require "luatz.gettime"
+local timetable = require "luatz.timetable"
 
 local function to_timestamp(o)
 	if type(o) == "number" then
 		return o
-	elseif getmetatable(o) == timetable_mt then
+	elseif getmetatable(o) == timetable.timetable_mt then
 		return o:timestamp()
 	end
 end
@@ -73,7 +73,7 @@ function tz_info_methods:find_current(current)
 end
 
 function tz_info_methods:localise(utc_ts)
-	utc_ts = utc_ts or gettime()
+	utc_ts = utc_ts or tzgettime.gettime()
 	return utc_ts + self:find_current(utc_ts).gmtoff
 end
 tz_info_methods.localize = tz_info_methods.localise

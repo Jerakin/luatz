@@ -1,4 +1,4 @@
-local strftime = require "luatz.strftime".strftime
+local strftime = require "luatz.strftime"
 local strformat = string.format
 local floor = math.floor
 local idiv do
@@ -186,7 +186,7 @@ function timetable_methods:rfc_3339()
 end
 
 function timetable_methods:strftime(format_string)
-	return strftime(format_string, self)
+	return strftime.strftime(format_string, self)
 end
 
 local timetable_mt
