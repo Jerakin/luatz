@@ -1,0 +1,66 @@
+local luatz = require "luatz.init"
+
+-- We do this a few times ==> Convert a timestamp to timetable and normalise
+local function ts2tt(ts)
+	return luatz.timetable.new_from_timestamp(ts)
+end
+
+------------------------------------------------------------------------------
+function load_resource(filename)
+
+	local file = sys.load_resource(filename)
+	return file
+end
+
+
+------------------------------------------------------------------------------
+function load_json_from_resource(filename)
+
+	local file = load_resource(filename)
+	if file then
+
+		local json_data = nil
+		-- Use pcall to catch possible parse errors so that we can print out the name of the file that we failed to parse
+		if pcall(function() json_data = json.decode(file) end) then
+			return json_data
+		else
+			log.assert(nil, "Error parsing json data from file: " .. filename)
+			return nil
+		end
+
+	end
+
+	log.error("Unable to load json file '" .. filename .. "'")
+	return nil
+end
+
+
+function init(self)
+	-- Get the current time in UTC
+	local utcnow = luatz.time()
+	local now = ts2tt(utcnow)
+	print(now, "now (UTC)")
+
+	-- Get a new time object 6 months from now
+	local x = now:clone()
+	x.month = x.month + 6
+	x:normalise()
+	print(x, "6 months from now")
+
+	-- Find out what time it is in Melbourne at the moment
+	local melbourne = luatz.get_tz("US/Hawaii.tz")
+	local now_in_melbourne = ts2tt(melbourne:localise(utcnow))
+	print(now_in_melbourne, "Hawaii")
+
+	-- Six months from now in melbourne (so month is incremented; but still the same time)
+	local m = now_in_melbourne:clone()
+	m.month = m.month + 6
+	m:normalise()
+	print(m, "6 months from now in melbourne")
+
+	-- Convert time back to utc; a daylight savings transition may have taken place!
+	-- There may be 2 results, but for we'll ignore the second possibility
+	local c, _ = melbourne:utctime(m:timestamp())
+	print(ts2tt(c), "6 months from now in melbourne converted to utc")
+	
+end
