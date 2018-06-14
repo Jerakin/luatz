@@ -4,6 +4,8 @@ local zoneinfo_path = "/tz/zoneinfo/"
 local tz_cache = {}
 
 local function name_to_zoneinfo_path(name)
+	assert(name, "Getting the local time zone is not yet supported")
+
 	if name:sub(1, 1) == "/" then
 		return name
 	else
