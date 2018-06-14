@@ -1,3 +1,5 @@
+require "luatz.lfsextend"
+
 local _M = {
 	gettime = require "luatz.gettime";
 	parse = require "luatz.parse";

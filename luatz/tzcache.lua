@@ -1,6 +1,6 @@
 local tzfile = require "luatz.tzfile"
 
-local zoneinfo_path = "/luatz/zoneinfo/"
+local zoneinfo_path = "/tz/zoneinfo/"
 local tz_cache = {}
 
 local function name_to_zoneinfo_path(name)

@@ -26,3 +26,5 @@ The project forked from https://github.com/daurnimator/luatz have been adapted t
 You can use luatz in your own project by adding this project as a [Defold library dependency](http://www.defold.com/manuals/libraries/). Open your game.project file and in the dependencies field under project add:
 
 	https://github.com/Jerakin/luatz/archive/master.zip
+	https://github.com/Jerakin/ctz/archive/master.zip
+	https://github.com/britzl/defold-lfs/archive/master.zip
