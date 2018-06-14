@@ -238,19 +238,20 @@ local function read_tz(fd)
 end
 
 local function read_tzfile(path)
-	local fd
-	local local_file = sys.get_save_file("luatz", string.sub(path, 8))
-	if not lfs.exists(local_file) then
-		local _temp_resource = sys.load_resource(path)
-		lfs.mkdirs(lfs.dirname(local_file))
-		fd = assert(io.open(local_file, "w"))
-		fd:write(_temp_resource)
-	else
-		fd = assert(io.open(local_file, "rb"))
+	local local_file = sys.get_save_file("luatz", string.sub(path, 2))
+	local _temp_resource = sys.load_resource(path)
+	if not _temp_resource then
+		return
 	end
 	
+	lfs.mkdirs(lfs.dirname(local_file))
+	local f = assert(io.open(local_file, "w"))
+	f:write(_temp_resource)
+	f:close()
+	local fd = assert(io.open(local_file))
 	local tzinfo = read_tz(fd)
 	fd:close()
+	
 	return tzinfo
 end
 
