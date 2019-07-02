@@ -6,8 +6,8 @@ shared_state = 1
 
 [project]
 title = luatz
-custom_resources = /luatz/zoneinfo
-dependencies = https://github.com/britzl/defold-lfs/archive/1.0.zip
+custom_resources = /tz/zoneinfo
+dependencies = https://github.com/britzl/defold-lfs/archive/1.0.zip,https://github.com/Jerakin/ctz/archive/master.zip,https://github.com/britzl/gooey/archive/master.zip
 
 [library]
 include_dirs = luatz

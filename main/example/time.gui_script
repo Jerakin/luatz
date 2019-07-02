@@ -1,0 +1,99 @@
+local gooey = require "gooey.gooey"
+local kenny = require "gooey.themes.kenneyblue.kenneyblue"
+local luatz = require "luatz.luatz"
+
+local selected = {}
+function init(self)
+	luatz.time()
+	gooey.acquire_input()
+	self.time_zones = {
+		"Etc/GMT-11",
+		"Etc/GMT+4",
+		"Etc/GMT-14",
+		"Etc/GMT+5",
+		"Etc/GMT-10",
+		"Etc/GMT+1",
+		"Etc/GMT+11",
+		"Etc/GMT+10",
+		"Etc/GMT-9",
+		"Etc/GMT+8",
+		"Etc/GMT+9",
+		"Etc/GMT+12",
+		"Etc/GMT-8",
+		"Etc/GMT+6",
+		"Etc/GMT-13",
+		"Etc/GMT+2",
+		"Etc/GMT-12",
+		"Etc/GMT+3",
+		"Etc/GMT+7",
+		"Jamaica",
+		"Israel",
+		"Iran",
+		"Japan",
+		"America/Danmarkshavn",
+		"America/Detroit",
+		"America/Recife",
+		"America/Mexico_City",
+	}
+end
+
+local function ts2tt(ts)
+	return luatz.timetable.new_from_timestamp(ts)
+end
+
+
+local function time_string(seconds)
+	local hours = string.format("%02.f", math.floor(seconds/3600));
+	local mins = string.format("%02.f", math.floor(seconds/60 - (hours*60)));
+	local secs = string.format("%02.f", math.floor(seconds - hours*3600 - mins *60));
+	return hours..":"..mins..":"..secs
+end
+local function update_time()
+	if selected["to"] and selected["from"] then
+		-- Get the time in seconds from the different regions
+		local seconds = luatz.time_in(selected["from"]) - luatz.time_in(selected["to"]) + 1
+		local new = luatz.strftime.strftime("%H:%M:%S", ts2tt(seconds))
+
+		gui.set_text(gui.get_node("time"), time_string(seconds)) --)
+	end
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	-- Add message-handling code here
+	-- Remove this function if not needed
+end
+
+local function on_click(list)
+	selected[list.id] = list.data[list.selected_item]
+	update_time()
+end
+
+local function on_refresh(list)
+	for i,item in ipairs(list.items) do
+		if item.data then
+			gui.set_text(item.nodes[hash(list.id .."/listitem_text")], item.data)
+		end
+	end
+end
+
+function on_input(self, action_id, action)
+	kenny.dynamic_list("from", "from_scroll", self.time_zones, action_id, action, on_click)
+	kenny.dynamic_list("to", "to_scroll", self.time_zones, action_id, action, on_click)
+	--kenny.dynamic_list("from", "from/stencil", "from/listitem_bg", self.time_zones, action_id, action, on_click, on_refresh)
+	--gooey.dynamic_list("to", "to/stencil", "to/listitem_bg", self.time_zones, action_id, action, on_click, on_refresh)
+end
+
+function on_reload(self)
+	-- Add input-handling code here
+	-- Remove this function if not needed
+end

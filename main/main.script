@@ -1,39 +1,9 @@
-local luatz = require "luatz.init"
+local luatz = require "luatz.luatz"
 
 -- We do this a few times ==> Convert a timestamp to timetable and normalise
 local function ts2tt(ts)
 	return luatz.timetable.new_from_timestamp(ts)
 end
-
-------------------------------------------------------------------------------
-function load_resource(filename)
-
-	local file = sys.load_resource(filename)
-	return file
-end
-
-
-------------------------------------------------------------------------------
-function load_json_from_resource(filename)
-
-	local file = load_resource(filename)
-	if file then
-
-		local json_data = nil
-		-- Use pcall to catch possible parse errors so that we can print out the name of the file that we failed to parse
-		if pcall(function() json_data = json.decode(file) end) then
-			return json_data
-		else
-			log.assert(nil, "Error parsing json data from file: " .. filename)
-			return nil
-		end
-
-	end
-
-	log.error("Unable to load json file '" .. filename .. "'")
-	return nil
-end
-
 
 function init(self)
 	-- Get the current time in UTC
@@ -48,9 +18,9 @@ function init(self)
 	print(x, "6 months from now")
 
 	-- Find out what time it is in Melbourne at the moment
-	local melbourne = luatz.get_tz("US/Hawaii.tz")
+	local melbourne = luatz.get_tz("Australia/Melbourne")
 	local now_in_melbourne = ts2tt(melbourne:localise(utcnow))
-	print(now_in_melbourne, "Hawaii")
+	print(now_in_melbourne, "Australia/Melbourne")
 
 	-- Six months from now in melbourne (so month is incremented; but still the same time)
 	local m = now_in_melbourne:clone()
